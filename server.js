@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
 const colors = require("colors");
+const errorHandler = require("./middleware/error");
 
 // DB
 const connectDB = require("./config/db");
@@ -34,6 +35,9 @@ if (process.env.NODE_ENV === "development") {
 
 // Router Middleware
 app.use("/api/v1/bootcamps", bootcampsRouter);
+
+// Error Middleware
+app.use(errorHandler);
 
 // Start Server
 const PORT = process.env.PORT || 5000;
