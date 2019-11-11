@@ -21,6 +21,9 @@ connectDB();
 // Initialize express
 const app = express();
 
+// Express middleware
+app.use(express.json());
+
 // Custom Middleware
 /* 
 @Desc Dev logging Middleware
