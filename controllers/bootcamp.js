@@ -11,6 +11,7 @@ exports.getBootcamps = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
+      counts: bootamps.length,
       data: bootamps
     });
   } catch (error) {
@@ -28,9 +29,9 @@ exports.getBootcamps = async (req, res, next) => {
 */
 exports.getBootcamp = async (req, res, next) => {
   try {
-    const bootamp = await Bootamp.findById(req.params.id);
+    const bootcamp = await Bootamp.findById(req.params.id);
 
-    if (!bootamp) {
+    if (!bootcamp) {
       res.status(400).json({
         success: false,
         message: "No Bootcamp found"
@@ -40,7 +41,7 @@ exports.getBootcamp = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      data: bootamp
+      data: bootcamp
     });
   } catch (error) {
     res.status(400).json({
@@ -75,12 +76,31 @@ exports.createBootcamp = async (req, res, next) => {
 @route      PUT /api/v1/bootcamps/:id
 @access     Private
 */
-exports.updateBootcamp = (req, res, next) => {
-  res.status(200).json({
-    success: true,
-    msg: `Update bootamps for ${req.params.id}`
-  });
-  next();
+exports.updateBootcamp = async (req, res, next) => {
+  try {
+    const bootcamp = await Bootamp.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true
+    });
+
+    if (!bootcamp) {
+      res.status(400).json({
+        success: false,
+        message: "No Bootcamp found"
+      });
+      return;
+    }
+
+    res.status(200).json({
+      success: true,
+      data: bootcamp
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: error.message
+    });
+  }
 };
 
 /* 
@@ -88,10 +108,26 @@ exports.updateBootcamp = (req, res, next) => {
 @route      DELETE /api/v1/bootcamps/:id
 @access     Private
 */
-exports.deleteBootcamp = (req, res, next) => {
-  res.status(200).json({
-    success: true,
-    msg: `Delete bootamp for ${req.params.id}`
-  });
-  next();
+exports.deleteBootcamp = async (req, res, next) => {
+  try {
+    const bootcamp = await Bootamp.findByIdAndDelete(req.params.id);
+
+    if (!bootcamp) {
+      res.status(400).json({
+        success: false,
+        message: "No Bootcamp found"
+      });
+      return;
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Successfully Deleted"
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: error.message
+    });
+  }
 };
