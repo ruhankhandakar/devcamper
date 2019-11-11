@@ -10,12 +10,12 @@
     "dev": "nodemon server.js"
   },
   "dependencies": {
+    "colors": "^1.4.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "mongoose": "^5.7.9"
   },
   "devDependencies": {
-    "colors": "^1.4.0",
     "morgan": "^1.9.1",
     "nodemon": "^1.19.4"
   }
