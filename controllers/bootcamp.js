@@ -5,12 +5,20 @@ const Bootamp = require("../models/Bootcamp");
 @route      GET /api/v1/bootcamps
 @access     Public
 */
-exports.getBootcamps = (req, res, next) => {
-  res.status(200).json({
-    success: true,
-    msg: "Show all bootcamps"
-  });
-  next();
+exports.getBootcamps = async (req, res, next) => {
+  try {
+    const bootamps = await Bootamp.find();
+
+    res.status(200).json({
+      success: true,
+      data: bootamps
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: error.message
+    });
+  }
 };
 
 /* 
@@ -18,12 +26,28 @@ exports.getBootcamps = (req, res, next) => {
 @route      GET /api/v1/bootcamps/:id
 @access     Public
 */
-exports.getBootcamp = (req, res, next) => {
-  res.status(200).json({
-    success: true,
-    msg: `Get Single bootamp for ${req.params.id}`
-  });
-  next();
+exports.getBootcamp = async (req, res, next) => {
+  try {
+    const bootamp = await Bootamp.findById(req.params.id);
+
+    if (!bootamp) {
+      res.status(400).json({
+        success: false,
+        message: "No Bootcamp found"
+      });
+      return;
+    }
+
+    res.status(200).json({
+      success: true,
+      data: bootamp
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: error.message
+    });
+  }
 };
 
 /* 
