@@ -10,9 +10,6 @@ const connectDB = require("./config/db");
 // Route files
 const bootcampsRouter = require("./routes/bootcamp");
 
-// Logger
-const logger = require("./middleware/logger");
-
 // Load the config file
 dotenv.config({ path: "./config/config.env" });
 

@@ -1,5 +1,5 @@
 const Bootamp = require("../models/Bootcamp");
-
+const ErrorResponse = require("../utils/errorResponse");
 /* 
 @desc       Get All Bootcamps
 @route      GET /api/v1/bootcamps
@@ -15,10 +15,7 @@ exports.getBootcamps = async (req, res, next) => {
       data: bootamps
     });
   } catch (error) {
-    res.status(400).json({
-      success: false,
-      message: error.message
-    });
+    next(error);
   }
 };
 
@@ -32,11 +29,7 @@ exports.getBootcamp = async (req, res, next) => {
     const bootcamp = await Bootamp.findById(req.params.id);
 
     if (!bootcamp) {
-      res.status(400).json({
-        success: false,
-        message: "No Bootcamp found"
-      });
-      return;
+      return next(new ErrorResponse("No Bootcamp found", 404));
     }
 
     res.status(200).json({
@@ -61,10 +54,7 @@ exports.createBootcamp = async (req, res, next) => {
       data: bootamp
     });
   } catch (error) {
-    res.status(400).json({
-      success: false,
-      message: error.message
-    });
+    next(error);
   }
 };
 
@@ -81,11 +71,7 @@ exports.updateBootcamp = async (req, res, next) => {
     });
 
     if (!bootcamp) {
-      res.status(400).json({
-        success: false,
-        message: "No Bootcamp found"
-      });
-      return;
+      return next(new ErrorResponse("No Bootcamp found", 404));
     }
 
     res.status(200).json({
@@ -93,10 +79,7 @@ exports.updateBootcamp = async (req, res, next) => {
       data: bootcamp
     });
   } catch (error) {
-    res.status(400).json({
-      success: false,
-      message: error.message
-    });
+    next(error);
   }
 };
 
@@ -110,11 +93,7 @@ exports.deleteBootcamp = async (req, res, next) => {
     const bootcamp = await Bootamp.findByIdAndDelete(req.params.id);
 
     if (!bootcamp) {
-      res.status(400).json({
-        success: false,
-        message: "No Bootcamp found"
-      });
-      return;
+      return next(new ErrorResponse("No Bootcamp found", 404));
     }
 
     res.status(200).json({
@@ -122,9 +101,6 @@ exports.deleteBootcamp = async (req, res, next) => {
       message: "Successfully Deleted"
     });
   } catch (error) {
-    res.status(400).json({
-      success: false,
-      message: error.message
-    });
+    next(error);
   }
 };
