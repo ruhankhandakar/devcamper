@@ -4,14 +4,14 @@ const morgan = require("morgan");
 const colors = require("colors");
 const errorHandler = require("./middleware/error");
 
+// Load the config file
+dotenv.config({ path: "./config/config.env" });
+
 // DB
 const connectDB = require("./config/db");
 
 // Route files
 const bootcampsRouter = require("./routes/bootcamp");
-
-// Load the config file
-dotenv.config({ path: "./config/config.env" });
 
 // Start DB Connection
 connectDB();
@@ -26,6 +26,7 @@ app.use(express.json());
 /* 
 @Desc Dev logging Middleware
 */
+
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
