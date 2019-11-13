@@ -12,6 +12,7 @@ const connectDB = require("./config/db");
 
 // Route files
 const bootcampsRouter = require("./routes/bootcamp");
+const courseRouter = require("./routes/course");
 
 // Start DB Connection
 connectDB();
@@ -33,6 +34,7 @@ if (process.env.NODE_ENV === "development") {
 
 // Router Middleware
 app.use("/api/v1/bootcamps", bootcampsRouter);
+app.use("/api/v1/courses", courseRouter);
 
 // Error Middleware
 app.use(errorHandler);
