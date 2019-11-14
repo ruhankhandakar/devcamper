@@ -52,4 +52,9 @@ UserSchema.methods.getSignedJwt = function() {
   });
 };
 
+// check password
+UserSchema.methods.checkPassword = async function(enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
+};
+
 module.exports = mongoose.model("User", UserSchema);
