@@ -17,6 +17,7 @@ const connectDB = require("./config/db");
 // Route files
 const bootcampsRouter = require("./routes/bootcamp");
 const courseRouter = require("./routes/course");
+const authRouter = require("./routes/auth");
 
 // Start DB Connection
 connectDB();
@@ -45,6 +46,7 @@ app.use(express.static(path.join(__dirname, "public")));
 // Router Middleware
 app.use("/api/v1/bootcamps", bootcampsRouter);
 app.use("/api/v1/courses", courseRouter);
+app.use("/api/v1/auth", authRouter);
 
 // Error Middleware
 app.use(errorHandler);
