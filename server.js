@@ -5,6 +5,7 @@ const dotenv = require("dotenv");
 const morgan = require("morgan");
 const colors = require("colors");
 const fileUpload = require("express-fileupload");
+const cookieParser = require("cookie-parser");
 
 const errorHandler = require("./middleware/error");
 
@@ -27,6 +28,9 @@ const app = express();
 
 // Express middleware
 app.use(express.json());
+
+// Cookie parser middleware
+app.use(cookieParser());
 
 // Custom Middleware
 /* 
