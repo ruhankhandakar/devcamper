@@ -7,6 +7,10 @@ const colors = require("colors");
 const fileUpload = require("express-fileupload");
 const cookieParser = require("cookie-parser");
 
+const mongoSanitize = require("express-mongo-sanitize");
+const helmet = require("helmet");
+const xss = require("xss-clean");
+
 const errorHandler = require("./middleware/error");
 
 // Load the config file
@@ -30,6 +34,15 @@ const app = express();
 
 // Express middleware
 app.use(express.json());
+
+// To remove data, use:
+app.use(mongoSanitize());
+
+// Set Security Header
+app.use(helmet());
+
+// Prevent XSS attacks
+app.use(xss());
 
 // Cookie parser middleware
 app.use(cookieParser());
