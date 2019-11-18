@@ -10,6 +10,9 @@ const cookieParser = require("cookie-parser");
 const mongoSanitize = require("express-mongo-sanitize");
 const helmet = require("helmet");
 const xss = require("xss-clean");
+const expressRateLimit = require("express-rate-limit");
+const hpp = require("hpp");
+const cors = require("cors");
 
 const errorHandler = require("./middleware/error");
 
@@ -43,6 +46,19 @@ app.use(helmet());
 
 // Prevent XSS attacks
 app.use(xss());
+
+// Rate Limiting
+const limiter = expressRateLimit({
+  windowMs: 10 * 60 * 1000, // 10 mins
+  max: 100
+});
+app.use(limiter);
+
+// prevent http param pollution
+app.use(hpp());
+
+// Enable cors
+app.use(cors());
 
 // Cookie parser middleware
 app.use(cookieParser());
