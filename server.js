@@ -20,6 +20,7 @@ const bootcampsRouter = require("./routes/bootcamp");
 const courseRouter = require("./routes/course");
 const authRouter = require("./routes/auth");
 const userRouter = require("./routes/users");
+const reviewRouter = require("./routes/review");
 
 // Start DB Connection
 connectDB();
@@ -53,6 +54,7 @@ app.use("/api/v1/bootcamps", bootcampsRouter);
 app.use("/api/v1/courses", courseRouter);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/reviews", reviewRouter);
 
 // Error Middleware
 app.use(errorHandler);
